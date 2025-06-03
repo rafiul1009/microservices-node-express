@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { AuthRequest } from '../../common/middlewares/auth.middleware';
 import userService from './user.service';
 import { ValidationError } from '../../common/utils/errors';
+import { DocumentType } from '@typegoose/typegoose';
+import { User } from './user.model';
 
 export class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
@@ -64,10 +66,10 @@ export class UserController {
   // Admin routes
   async getAllUsers(req: Request, res: Response, next: NextFunction) {
     try {
-      const users = await userService.UserModel.find();
+      const users = await userService.getAllUsers();
       res.status(200).json({
         status: 'success',
-        data: users.map(user => user.toPublicProfile()),
+        data: users.map((user: DocumentType<User>) => user.toPublicProfile()),
       });
     } catch (error) {
       next(error);

@@ -81,6 +81,10 @@ export class UserService {
 
     return user;
   }
+
+  async getAllUsers(): Promise<DocumentType<User>[]> {
+    return UserModel.find();
+  }
 }
 
 export default new UserService();

@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { Secret } from 'jsonwebtoken';
 import config from '../../config';
 import userService from '../user/user.service';
 import { ValidationError } from '../../common/utils/errors';
@@ -8,12 +8,18 @@ import { TokenPayload, LoginResponse, TokenResponse } from './auth.dto';
 
 export class AuthService {
   private generateAccessToken(payload: TokenPayload): string {
-    return jwt.sign(payload, config.jwt.accessSecret, {
+    if (!config.jwt.accessSecret) {
+      throw new Error('JWT access secret is not defined');
+    }
+    return jwt.sign(payload, config.jwt.accessSecret as Secret, {
       expiresIn: config.jwt.accessExpiration,
     });
   }
 
   private generateRefreshToken(payload: TokenPayload): string {
+    if (!config.jwt.refreshSecret || !config.jwt.refreshExpiration) {
+      throw new Error('JWT refresh secret is not defined');
+    }
     return jwt.sign(payload, config.jwt.refreshSecret, {
       expiresIn: config.jwt.refreshExpiration,
     });
