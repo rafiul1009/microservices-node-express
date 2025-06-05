@@ -11,7 +11,7 @@ export class AuthService {
     if (!config.jwt.accessSecret) {
       throw new Error('JWT access secret is not defined');
     }
-    return jwt.sign(payload, config.jwt.accessSecret as Secret, {
+    return jwt.sign(payload, config.jwt.accessSecret as Secret | null, {
       expiresIn: config.jwt.accessExpiration,
     });
   }
