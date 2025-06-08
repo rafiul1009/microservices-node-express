@@ -1,49 +1,9 @@
+import { Config } from '@/types/config.type';
 import dotenv from 'dotenv';
-import { Secret } from 'jsonwebtoken';
 
-// Load environment variables from .env file
 dotenv.config();
 
-interface ServerConfig {
-  port: number | string;
-  nodeEnv: string;
-}
-
-interface MongoDBConfig {
-  uri: string;
-}
-
-interface JWTConfig {
-  accessSecret: Secret;
-  refreshSecret: Secret;
-  accessExpiration: string;
-  refreshExpiration: string;
-}
-
-interface RabbitMQConfig {
-  url: string;
-  exchange: string;
-  queue: string;
-}
-
-interface CorsConfig {
-  allowedOrigins: string[];
-}
-
-interface LoggingConfig {
-  level: string;
-}
-
-interface Config {
-  server: ServerConfig;
-  mongodb: MongoDBConfig;
-  jwt: JWTConfig;
-  rabbitmq: RabbitMQConfig;
-  cors: CorsConfig;
-  logging: LoggingConfig;
-}
-
-const config = {
+const config: Config = {
   server: {
     port: process.env.PORT || 3000,
     nodeEnv: process.env.NODE_ENV || 'development',
@@ -85,4 +45,3 @@ for (const envVar of requiredEnvVars) {
 }
 
 export default config;
-export type { Config };

@@ -1,8 +1,8 @@
-import jwt, { Secret } from 'jsonwebtoken';
-import config from '../../config';
-import userService from '../user/user.service';
-import { ValidationError } from '../../common/utils/errors';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { DocumentType } from '@typegoose/typegoose';
+import config from '@/config';
+import { ValidationError } from '@/common/utils/errors';
+import userService from '../user/user.service';
 import { User } from '../user/user.model';
 import { TokenPayload, LoginResponse, TokenResponse } from './auth.dto';
 
@@ -11,9 +11,9 @@ export class AuthService {
     if (!config.jwt.accessSecret) {
       throw new Error('JWT access secret is not defined');
     }
-    return jwt.sign(payload, config.jwt.accessSecret as Secret | null, {
+    return jwt.sign(payload, config.jwt.accessSecret, {
       expiresIn: config.jwt.accessExpiration,
-    });
+    } as SignOptions);
   }
 
   private generateRefreshToken(payload: TokenPayload): string {
@@ -22,7 +22,7 @@ export class AuthService {
     }
     return jwt.sign(payload, config.jwt.refreshSecret, {
       expiresIn: config.jwt.refreshExpiration,
-    });
+    } as SignOptions);
   }
 
   private generateAuthTokens(user: DocumentType<User>) {
