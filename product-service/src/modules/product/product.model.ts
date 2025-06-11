@@ -1,4 +1,4 @@
-import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
+import { prop, getModelForClass, Ref, DocumentType } from '@typegoose/typegoose';
 
 export class Product {
   @prop({ required: true })
@@ -23,7 +23,7 @@ export class Product {
   public updatedAt?: Date;
 
   // Method to get public product data
-  public toPublicProduct() {
+  public toPublicProduct(this: DocumentType<Product>) {
     return {
       id: this._id,
       name: this.name,

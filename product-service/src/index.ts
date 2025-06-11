@@ -4,11 +4,11 @@ import mongoose from 'mongoose';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import config from './config';
-import logger from './common/logger';
-import { errorHandler } from './common/error-handler';
 import productRoutes from './modules/product/product.routes';
 import rabbitmq from './common/services/rabbitmq';
 import productService from './modules/product/product.service';
+import { errorHandler } from './common/middlewares/error.middleware';
+import logger from './common/utils/logger';
 
 const app = express();
 

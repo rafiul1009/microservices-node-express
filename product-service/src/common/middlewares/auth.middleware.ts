@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { AuthenticationError, AuthorizationError } from './errors';
+import { AuthenticationError, AuthorizationError } from '@/common/utils/errors';
 import config from '@/config';
 
 export interface AuthRequest extends Request {
