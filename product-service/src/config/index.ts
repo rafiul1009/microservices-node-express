@@ -1,42 +1,7 @@
+import { Config } from '@/types/config.type';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-interface ServerConfig {
-  port: number | string;
-  nodeEnv: string;
-}
-
-interface MongoDBConfig {
-  uri: string;
-}
-
-interface JWTConfig {
-  accessSecret: string;
-}
-
-interface RabbitMQConfig {
-  url: string;
-  exchange: string;
-  queue: string;
-}
-
-interface CorsConfig {
-  allowedOrigins: string[];
-}
-
-interface LoggingConfig {
-  level: string;
-}
-
-interface Config {
-  server: ServerConfig;
-  mongodb: MongoDBConfig;
-  jwt: JWTConfig;
-  rabbitmq: RabbitMQConfig;
-  cors: CorsConfig;
-  logging: LoggingConfig;
-}
 
 const config: Config = {
   server: {
@@ -76,4 +41,3 @@ for (const envVar of requiredEnvVars) {
 }
 
 export default config;
-export type { Config };
